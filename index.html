@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MarjoLinda</title>
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #89CFF0;
+      margin: 0;
+      overflow: hidden;
+      position: relative;
+      font-family: sans-serif;
+    }
+
+    .card {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 600px;
+      width: 600px;
+      background-color: #fff;
+      border-radius: 16px;
+      box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .card > .question p {
+      font-size: 32px;
+      font-weight: 600;
+    }
+
+    .buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .btn-yes, .btn-no, .btn-photo {
+      height: 48px;
+      padding: 0 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-yes {
+      background-color: #00FA9A;
+    }
+
+    .btn-no {
+      background-color: #FF4040;
+      color: #fff;
+    }
+
+    .btn-photo {
+      background-color: #1E90FF;
+      color: #fff;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .answer {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .answer > p {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1E90FF;
+      text-shadow: 1px 1px #000;
+    }
+
+    .photo-section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .photo-section img {
+      width: 300px;
+      border-radius: 12px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .photo-section h2 {
+      color: #000;
+      margin-bottom: 10px;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 4s linear infinite;
+      z-index: 0;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(45deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-600px) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <div class="question" id="question">
+      <p>Marjorie, quer ser minha futura esposa?</p>
+      <div class="buttons">
+        <button id="yes" class="btn-yes">Sim!</button>
+        <button id="no" class="btn-no">Não</button>
+      </div>
+    </div>
+
+    <div class="answer" id="answer">
+      <p>Eba, valeu a pena esperar alguns anos para te encontrar de novo.<br>Até porque eu amo você! 💙</p>
+      <button id="see-photo" class="btn-photo">Uma foto nossa</button>
+    </div>
+
+    <div class="photo-section" id="photo-section">
+      <h2>Viu como a gente combina?</h2>
+      <img src="nossa-foto.jpg" alt="Foto de vocês">
+    </div>
+  </div>
+
+  <audio id="love-song" src="videoplayback.mp3" loop></audio>
+
+  <script>
+    window.onload = function () {
+      let card = document.getElementById("card");
+
+      document.querySelector("#yes").addEventListener("click", function () {
+        let question = document.getElementById("question");
+        let message = document.getElementById("answer");
+        let audio = document.getElementById("love-song");
+        let photoBtn = document.getElementById("see-photo");
+
+        card.style.backgroundImage =
+          "url('https://i.pinimg.com/originals/78/66/c8/7866c867bdc9f5bbddf2e8eb9b2a08cc.gif')";
+        card.style.backgroundSize = "cover";
+        question.style.display = "none";
+        message.style.display = "flex";
+        photoBtn.style.display = "inline-block";
+
+        audio.play();
+
+        setInterval(() => {
+          const heart = document.createElement("div");
+          heart.className = "heart";
+          heart.style.left = Math.random() * window.innerWidth + "px";
+          heart.style.top = window.innerHeight + "px";
+          document.body.appendChild(heart);
+          setTimeout(() => heart.remove(), 4000);
+        }, 300);
+      });
+
+      document.querySelector("#see-photo").addEventListener("click", function () {
+        document.getElementById("photo-section").style.display = "flex";
+      });
+
+      document.querySelector("#no").addEventListener("mouseover", function () {
+        let width = window.innerWidth - 100;
+        let height = window.innerHeight - 100;
+
+        this.style.position = "absolute";
+        this.style.top = Math.random() * height + "px";
+        this.style.left = Math.random() * width + "px";
+      });
+    };
+  </script>
+</body>
+</html>
